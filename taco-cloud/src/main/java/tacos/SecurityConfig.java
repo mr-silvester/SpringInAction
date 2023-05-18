@@ -22,6 +22,7 @@ public class SecurityConfig{
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(a -> a
+                        .requestMatchers("/admin").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/main").hasAnyRole("USER", "ADMIN")
                         .requestMatchers(HttpMethod.GET, "/").permitAll()
                         .requestMatchers(HttpMethod.GET, "/images/**").permitAll()
@@ -46,7 +47,12 @@ public class SecurityConfig{
                 .password(bCryptPasswordEncoder().encode("1234"))
                 .roles("USER")
                 .build();
-        return new InMemoryUserDetailsManager(user);
+        UserDetails admin = User.builder()
+                .username("admin")
+                .password(bCryptPasswordEncoder().encode("1234"))
+                .roles("ADMIN")
+                .build();
+        return new InMemoryUserDetailsManager(user, admin);
     }
 
 
