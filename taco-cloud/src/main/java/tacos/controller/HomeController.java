@@ -1,9 +1,9 @@
 package tacos.controller;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class HomeController {
@@ -18,8 +18,19 @@ public class HomeController {
     }
 
     @GetMapping("/main")
-    public String loginSuccess() {
-        System.out.println("GET : /main has been called");
+    public String welcomePage(Model model, Authentication authentication) {
+        setRoleAttribute(model, authentication);
         return "welcome";
+    }
+
+    @GetMapping("/test")
+    public String testPage() {
+        return "test";
+    }
+
+    private void setRoleAttribute(Model model, Authentication authentication) {
+        boolean isAdmin = authentication != null && authentication.getAuthorities().stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN"));
+        model.addAttribute("isAdmin", isAdmin);
     }
 }

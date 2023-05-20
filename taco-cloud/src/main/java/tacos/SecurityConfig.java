@@ -12,8 +12,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
-import static org.springframework.security.config.Customizer.withDefaults;
-
 
 @Configuration
 @EnableWebSecurity
@@ -26,6 +24,7 @@ public class SecurityConfig{
                         .requestMatchers(HttpMethod.GET, "/main").hasAnyRole("USER", "ADMIN")
                         .requestMatchers(HttpMethod.GET, "/").permitAll()
                         .requestMatchers(HttpMethod.GET, "/images/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/test").permitAll()
                 )
                 .formLogin(login -> login
                         .loginPage("/login")	// [A] 커스텀 로그인 페이지 지정

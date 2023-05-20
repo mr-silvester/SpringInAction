@@ -1,14 +1,21 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <title>You Are Signed In</title>
+    <title>Welcome</title>
 </head>
 <body>
-<h1>Hello</h1>
+<h1>Welcome</h1>
+
 <div th:if="${param.logout}">
-    You have been logged out.</div>
+    You have been logged out.
+</div>
+
 <form th:action="@{/logout}" method="post">
-    <input type="submit" value="Log Out" />
+    <input type="submit" value="Log Out"/>
 </form>
+
+<button th:if="${isAdmin}" onclick="location.href='/admin'">관리자 페이지</button>
+
 </body>
 </html>

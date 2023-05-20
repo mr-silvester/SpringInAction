@@ -25,7 +25,8 @@ dependencies {
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	annotationProcessor 'org.projectlombok:lombok'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
-	ext['spring-security.version']='6.1.0'
+	implementation 'org.springframework.security:spring-security-taglibs:6.0.2'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity:'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
