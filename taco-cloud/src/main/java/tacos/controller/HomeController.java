@@ -17,10 +17,12 @@ public class HomeController {
         return "login";
     }
 
-    @GetMapping("/main")
-    public String welcomePage(Model model, Authentication authentication) {
+    @GetMapping("/user")
+    public String userPage(Model model, Authentication authentication) {
         setRoleAttribute(model, authentication);
-        return "welcome";
+        if  ( !authentication.isAuthenticated() )
+            return "login";
+        return "my-page";
     }
 
     @GetMapping("/test")
