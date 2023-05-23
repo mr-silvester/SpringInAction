@@ -10,6 +10,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
+import java.io.IOException;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig{
@@ -31,8 +33,7 @@ public class SecurityConfig{
                 .logout()
                 .logoutSuccessUrl("/")  //로그아웃 성공 시 이동할 URI
                 .and()
-                .exceptionHandling()    //예외처리
-                .accessDeniedPage("/error");    //예외 발생 시 이동할 URI
+                .exceptionHandling(h -> h.accessDeniedPage("/error"));
         return http.build();
     }
 
