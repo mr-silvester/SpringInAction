@@ -20,6 +20,7 @@ public class HomeController {
     @GetMapping("/user")
     public String userPage(Model model, Authentication authentication) {
         setRoleAttribute(model, authentication);
+        model.addAttribute("userName", authentication.getName());
         if  ( !authentication.isAuthenticated() )
             return "login";
         return "my-page";
