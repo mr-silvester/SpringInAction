@@ -14,8 +14,10 @@
 <form th:action="@{/logout}" method="post">
     <input type="submit" value="Log Out"/>
 </form>
-
+<button onclick="location.href='/post/new'">게시글 작성</button>
+<button onclick="location.href='/post/1'">게시글 보기</button>
 <button th:if="${isAdmin}" onclick="location.href='/admin'">관리자 페이지</button>
+
 
 </body>
 </html>

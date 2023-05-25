@@ -18,9 +18,12 @@ public class SecurityConfig{
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .csrf().disable()
                 .authorizeHttpRequests(a -> a
                         .requestMatchers("/admin/**").hasRole("ADMIN") // /admin 요청은 ADMIN 권한을 가진 사용자만 요청가능
                         .requestMatchers("/user/**").authenticated()   // /user 요청은 인증 된 사용자만 요청가능
+                        .requestMatchers("/post/new").authenticated()   // /post/new 요청은 인증 된 사용자만 요청가능
+                        .requestMatchers("/post/update").authenticated()   // /post/new 요청은 인증 된 사용자만 요청가능
                         .requestMatchers("/**").permitAll() // 그 외 모든 요청에 대해서는 모든 사용자 요청가능
                 )
                 .formLogin(login -> login

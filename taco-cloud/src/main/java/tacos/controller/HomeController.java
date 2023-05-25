@@ -1,9 +1,10 @@
 package tacos.controller;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class HomeController {
@@ -18,22 +19,20 @@ public class HomeController {
     }
 
     @GetMapping("/user")
-    public String userPage(Model model, Authentication authentication) {
-        setRoleAttribute(model, authentication);
+    public String userPage(Model model, HttpSession httpSession, Authentication authentication) {
+        setRoleAttribute(httpSession, authentication);
         model.addAttribute("userName", authentication.getName());
+        model.addAttribute("isAdmin", httpSession.getAttribute("isAdmin"));
         if  ( !authentication.isAuthenticated() )
             return "login";
         return "my-page";
     }
 
-    @GetMapping("/test")
-    public String testPage() {
-        return "test";
-    }
-
-    private void setRoleAttribute(Model model, Authentication authentication) {
+    private void setRoleAttribute(HttpSession httpSession, Authentication authentication) {
         boolean isAdmin = authentication != null && authentication.getAuthorities().stream()
                 .anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN"));
-        model.addAttribute("isAdmin", isAdmin);
+        httpSession.setAttribute("isAdmin", isAdmin);
+        assert authentication != null;
+        httpSession.setAttribute("userName", authentication.getName());
     }
 }
