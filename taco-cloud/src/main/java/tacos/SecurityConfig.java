@@ -2,6 +2,7 @@ package tacos;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -10,20 +11,19 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
-import java.io.IOException;
-
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig{
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
                 .authorizeHttpRequests(a -> a
-                        .requestMatchers("/admin/**").hasRole("ADMIN") // /admin 요청은 ADMIN 권한을 가진 사용자만 요청가능
-                        .requestMatchers("/user/**").authenticated()   // /user 요청은 인증 된 사용자만 요청가능
-                        .requestMatchers("/post/new").authenticated()   // /post/new 요청은 인증 된 사용자만 요청가능
-                        .requestMatchers("/post/update").authenticated()   // /post/new 요청은 인증 된 사용자만 요청가능
+                        //.requestMatchers("/admin/**").hasRole("ADMIN") // /admin 요청은 ADMIN 권한을 가진 사용자만 요청가능
+                        //.requestMatchers("/user/**").authenticated()   // /user 요청은 인증 된 사용자만 요청가능
+                        //.requestMatchers("/post/new").authenticated()   // /post/new 요청은 인증 된 사용자만 요청가능
+                        //.requestMatchers("/post/update").authenticated()   // /post/new 요청은 인증 된 사용자만 요청가능
                         .requestMatchers("/**").permitAll() // 그 외 모든 요청에 대해서는 모든 사용자 요청가능
                 )
                 .formLogin(login -> login

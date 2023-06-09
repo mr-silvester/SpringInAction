@@ -2,6 +2,7 @@ package tacos.controller;
 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,12 +13,14 @@ import tacos.dto.PostDTO;
 @RequestMapping("/post")
 public class PostController {
     @GetMapping("/new")
+    @PreAuthorize("isAuthenticated()")
     public String editPostPage(Model model, Authentication authentication) {
         model.addAttribute("author", authentication.getName());
         return "edit-post";
     }
 
     @PostMapping("/new")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<String> createPost(@RequestBody PostDTO postDto, HttpSession httpSession) {
         // 요청으로부터 전달받은 데이터를 사용하여 게시글 생성 로직을 수행합니다.
         // 여기서는 단순히 모델에 값을 저장하는 예시로 작성했습니다.
@@ -40,6 +43,7 @@ public class PostController {
     }
 
     @GetMapping("/{postId}/update")
+    @PreAuthorize("isAuthenticated()")
     public String postUpdatePage(@PathVariable("postId")String postId, HttpSession httpSession, Model model) {
         PostDTO postDto = (PostDTO) httpSession.getAttribute(postId);
         if ( postDto==null )

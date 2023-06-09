@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@PreAuthorize("hasRole('ADMIN')")
-@RequestMapping("/admin")
-public class AdminController {
+@RequestMapping("/test")
+public class TestController {
     @GetMapping
-    public String adminPage() {
-        return "admin";
+    @PreAuthorize("@customPermissionEvaluator.hasPermission(authentication, #a, 'isAdmin')")    // hasPermission 을 이용한 권한검사
+    public String testPage(Long a) {
+        return "test";
     }
 }
